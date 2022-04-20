@@ -1,0 +1,18 @@
+version: "3"
+services:
+  cs4610-final-backend:
+    env_file: .env
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cs4610-final-backend
+    hostname: cs4610-final-backend
+    restart: on-failure
+    ports:
+      - 8000:8000
+    networks:
+      - cs4610-final-network
+networks:
+  cs4610-final-network:
