@@ -10,6 +10,7 @@ RUN apk update \
 RUN pip install Django==4.0.1 \
   && pip install djangorestframework==3.13.1 \
   && pip install dnspython==2.2.0 \
+  && pip install djangorestframework-simplejwt==5.1.0 \
   && pip install django-cors-headers==3.11.0
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -12,7 +12,3 @@ services:
     restart: on-failure
     ports:
       - 8000:8000
-    networks:
-      - cs4610-final-network
-networks:
-  cs4610-final-network:

@@ -15,6 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ALLOWED_HOSTS = ["*"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -25,9 +26,6 @@ SECRET_KEY = 'django-insecure-e$!ey73+r3h$ilf3f158!o9(@8%7vqrw$d!0snuqmk4)(zph^=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'corsheaders',
     'aggieForumApp'
 ]
@@ -49,7 +48,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'aggieForum.urls'
@@ -102,7 +102,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -126,5 +125,49 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT"
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "Authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "cache-control",
+    "pragma",
+    "Set-Cookie"
+    "Cookie"
+]
+CORS_EXPOSE_HEADERS = [
+    "Set-Cookie",
+    "set-cookie:"
+]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost',
+                        'http://localhost:8000',
+                        'https://localhost',
+                        'https://localhost:8000']
+# CSRF_COOKIE_SAMESITE = 'Strict'
+# SESSION_COOKIE_SAMESITE = 'Strict'
+#bCSRF_COOKIE_HTTPONLY = False
+# SESSION_COOKIE_HTTPONLY = True
+# CSRF_TRUSTED_ORIGINS = ['https://localhost.com',
+#                         'https://*.127.0.0.1',
+#                         'http://localhost.com',
+#                         'http://*.127.0.0.1',
+#                         'https://localhost',
+#                         'https://*.127.0.0.1',
+#                         'http://localhost',
+#                         'http://*.127.0.0.1'
+#                         ]

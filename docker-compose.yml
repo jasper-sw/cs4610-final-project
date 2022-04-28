@@ -1,0 +1,30 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+
+  backend:
+    stdin_open: true
+    tty: true
+    build:
+        context: backend-container/.
+        dockerfile: Dockerfile
+    container_name: cs4610-final-backend
+    hostname: cs4610-final-backend
+    env_file: ./backend-container/.env
+    restart: on-failure
+    ports:
+      - 8000:8000
+
+  frontend:
+    stdin_open: true
+    tty: true
+    build:
+        context: frontend-container/.
+        dockerfile: Dockerfile
+    container_name: cs4610-final-frontend
+    hostname: cs4610-final-frontend
+    env_file: ./frontend-container/.env
+    restart: on-failure
+    ports:
+      - 80:80

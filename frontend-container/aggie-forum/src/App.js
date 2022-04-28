@@ -16,6 +16,14 @@ function App() {
 				  </Button>
 				</Link>
 			</div>
+			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#ABAAA5", borderRadius: "10px"}}>
+				<h1 style={{display: "flex", padding: "10px"}}>Login page</h1>
+				<Link to="/login" style={{display: "flex", padding: "10px"}}>
+				  <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
+					Login page
+				  </Button>
+				</Link>
+			</div>
 		</div>
 	</div>
   );
