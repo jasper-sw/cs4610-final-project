@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -48,7 +49,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
 ]
 
@@ -153,21 +153,13 @@ CORS_EXPOSE_HEADERS = [
     "Set-Cookie",
     "set-cookie:"
 ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000"
+]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = ['http://localhost',
                         'http://localhost:8000',
+                        'http://localhost:8000/csrf/'
                         'https://localhost',
                         'https://localhost:8000']
-# CSRF_COOKIE_SAMESITE = 'Strict'
-# SESSION_COOKIE_SAMESITE = 'Strict'
-#bCSRF_COOKIE_HTTPONLY = False
-# SESSION_COOKIE_HTTPONLY = True
-# CSRF_TRUSTED_ORIGINS = ['https://localhost.com',
-#                         'https://*.127.0.0.1',
-#                         'http://localhost.com',
-#                         'http://*.127.0.0.1',
-#                         'https://localhost',
-#                         'https://*.127.0.0.1',
-#                         'http://localhost',
-#                         'http://*.127.0.0.1'
-#                         ]
+

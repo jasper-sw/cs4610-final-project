@@ -2,6 +2,9 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import Navbar from "../../components/Navbar/navbar";
+import { Typography } from '@mui/material';
+
 
 function CreateAccount() {
   const [csrfToken, setCsrfToken] = useState(null);
@@ -54,10 +57,11 @@ function CreateAccount() {
 
 
   return (
-    <div style={{backgroundColor: "#002438", minHeight: "100vh"}}>
+    <div style={{backgroundColor: "#dddddb", minHeight: "100vh"}}>
 		<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <Navbar />
 			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#ABAAA5", borderRadius: "10px"}}>
-				<h1 style={{display: "flex", padding: "10px"}}>Create Account</h1>
+                <Typography variant="h5" style={{display: "flex", padding: "10px"}}>Create Account</Typography>
                 <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column"}}>
                 <label>
                     Username:
@@ -81,7 +85,7 @@ function CreateAccount() {
                 </label>
                 <input type="submit" value="Submit" />
                 </form>
-                <Link to="/" style={{display: "flex", padding: "10px"}}>
+                <Link to="/" style={{display: "flex", padding: "10px", textDecoration: "none"}}>
                     <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
                     Home Page
                     </Button>

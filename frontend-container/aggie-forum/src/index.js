@@ -15,15 +15,9 @@ root.render(
   <BrowserRouter basename="/">
     <Routes>
       <Route path="/" element={<App />} />
-    </Routes>
-	<Routes>
       <Route path="/example-page" element={<ExamplePage />} />
-  </Routes>
-  <Routes>
       <Route path="/login" element={<Login />} />
-   </Routes>
-   <Routes>
       <Route path="/create-account" element={<CreateAccount />} />
-   </Routes>
+    </Routes>
   </BrowserRouter>
 );

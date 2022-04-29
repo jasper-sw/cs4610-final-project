@@ -2,6 +2,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import Navbar from "../../components/Navbar/navbar";
+import { TextField } from '@mui/material';
+import { FormLabel } from '@mui/material';
+import { FormControl } from '@mui/material';
+
 
 function LoginPage() {
   const [csrfToken, setCsrfToken] = useState(null);
@@ -60,41 +65,43 @@ function LoginPage() {
 
 
   return (
-    <div style={{backgroundColor: "#002438", minHeight: "100vh"}}>
+    <div style={{backgroundColor: "#dddddb", minHeight: "100vh"}}>
 		<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#ABAAA5", borderRadius: "10px"}}>
+      <Navbar />
+			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#ABAAA5", borderRadius: "10px", minWidth: "50%", margin: "30px"}}>
 				<h1 style={{display: "flex", padding: "10px"}}>Login</h1>
         <form onSubmit={onSubmit}>
-          <label>
-            Username:
-            <input type="text" name="username" onChange={(e) => setUsername(e.target.value)}/>
-          </label>
-          <label>
-            Password:
-            <input type="text" name="password" onChange={(e) => setPassword(e.target.value)}/>
-          </label>
-          <input type="submit" value="Submit" />
+          <TextField onChange={(e) => setUsername(e.target.value)} id="outlined-basic" label="username" variant="outlined" style={{display: "flex", backgroundColor: "white", borderRadius: "10px", margin: "10px"}} />
+          <TextField onChange={(e) => setPassword(e.target.value)} id="outlined-basic" label="password" variant="outlined" style={{display: "flex", backgroundColor: "white", borderRadius: "10px", margin: "10px"}} />
+          <div style={{display: "flex", alignItems: "stretch", justifyContent: "center"}}>
+            <Button value="Submit" type="submit" style={{backgroundColor: "blue", color: "white", width: "70%"}}>Submit</Button>
+          </div>
         </form>
-        <div style={{display: "flex", padding: "10px"}}>
-          <Button onClick={whoami} style={{backgroundColor: "blue", color: "white"}}>
+
+        <div style={{display: "flex", alignItems: "center", padding: "10px"}}>
+          <Button onClick={whoami} style={{backgroundColor: "blue", color: "white", padding: "5px"}}>
             Whoami
           </Button>
         </div>
+
         <div style={{display: "flex", padding: "10px"}}>
-          <Button onClick={logout} style={{backgroundColor: "blue", color: "white"}}>
+          <Button onClick={logout} style={{backgroundColor: "blue", color: "white", textDecoration: "none"}}>
             Logout
           </Button>
         </div>
-        <Link to="/" style={{display: "flex", padding: "10px"}}>
+
+        <Link to="/" style={{display: "flex", padding: "10px", textDecoration: "none"}}>
             <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
             Home Page
             </Button>
         </Link>
-        <Link to="/create-account" style={{display: "flex", padding: "10px"}}>
+
+        <Link to="/create-account" style={{display: "flex", padding: "10px", textDecoration: "none"}}>
             <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
             Create Account
             </Button>
         </Link>
+
 			</div>
 		</div>
 	</div>
