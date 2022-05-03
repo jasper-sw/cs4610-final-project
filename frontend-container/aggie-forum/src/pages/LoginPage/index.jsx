@@ -1,17 +1,20 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Navbar from "../../components/Navbar/navbar";
 import { TextField } from '@mui/material';
 import { FormLabel } from '@mui/material';
 import { FormControl } from '@mui/material';
+import { Fab } from '@mui/material';
+import { Typography } from '@mui/material';
 
 
 function LoginPage() {
   const [csrfToken, setCsrfToken] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const navigate = useNavigate();
   axios.defaults.withCredentials = true;
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -61,6 +64,7 @@ function LoginPage() {
     .then(res => {
       console.log(res.data);
     })
+    navigate('/')
   }
 
 
@@ -69,39 +73,22 @@ function LoginPage() {
     <div style={{backgroundColor: "#dddddb", minHeight: "100vh"}}>
 		<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
       <Navbar />
-			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#ABAAA5", borderRadius: "10px", minWidth: "50%", margin: "30px"}}>
-				<h1 style={{display: "flex", padding: "10px"}}>Login</h1>
+			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "white", borderRadius: "10px", minWidth: "50%", margin: "30px"}}>
+        <Typography variant="h4" style={{textDecoration: "none", marginTop: "10px", marginBottom: "20px"}}>Log In</Typography>
         <form onSubmit={onSubmit}>
-          <TextField onChange={(e) => setUsername(e.target.value)} id="outlined-basic" label="username" variant="outlined" style={{display: "flex", backgroundColor: "white", borderRadius: "10px", margin: "10px"}} />
-          <TextField onChange={(e) => setPassword(e.target.value)} id="outlined-basic" label="password" variant="outlined" style={{display: "flex", backgroundColor: "white", borderRadius: "10px", margin: "10px"}} />
-          <div style={{display: "flex", alignItems: "stretch", justifyContent: "center"}}>
-            <Button value="Submit" type="submit" style={{backgroundColor: "blue", color: "white", width: "70%"}}>Submit</Button>
+          <TextField onChange={(e) => setUsername(e.target.value)} id="filled-basic" label="Username" variant="filled" style={{ display: "flex", marginBottom: "20px", }}/>
+          <TextField onChange={(e) => setPassword(e.target.value)} id="filled-basic" label="Password" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
+          <div style={{justifyContent: "center"}}>
+            <Fab value="Submit" type="submit"  variant="extended" size="medium" color="primary" aria-label="add" style={{ width: "100%", backgroundColor: "blue"}}>Log in</Fab>
           </div>
         </form>
 
-        <div style={{display: "flex", alignItems: "center", padding: "10px"}}>
-          <Button onClick={whoami} style={{backgroundColor: "blue", color: "white", padding: "5px"}}>
-            Whoami
-          </Button>
+        <div style={{ display: "flex" }}>
+          <p>New to AggieForum?</p>
+          <Link to="/create-account" style={{display: "flex", textDecoration: "none"}}>
+              <Button style={{display: "flex", color: "blue"}} variant="text">Sign Up</Button>
+          </Link>
         </div>
-
-        <div style={{display: "flex", padding: "10px"}}>
-          <Button onClick={logout} style={{backgroundColor: "blue", color: "white", textDecoration: "none"}}>
-            Logout
-          </Button>
-        </div>
-
-        <Link to="/" style={{display: "flex", padding: "10px", textDecoration: "none"}}>
-            <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
-            Home Page
-            </Button>
-        </Link>
-
-        <Link to="/create-account" style={{display: "flex", padding: "10px", textDecoration: "none"}}>
-            <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
-            Create Account
-            </Button>
-        </Link>
 
 			</div>
 		</div>
