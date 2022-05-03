@@ -12,6 +12,7 @@ function LoginPage() {
   const [csrfToken, setCsrfToken] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  axios.defaults.withCredentials = true;
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
