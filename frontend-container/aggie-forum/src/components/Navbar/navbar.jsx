@@ -44,16 +44,18 @@ const Navbar = (props) => {
             <Button variant='contained' style={{display: "flex", 
                             flexDirection: "row",
                             marginLeft: "auto", 
-                            color: "white"}} onClick={logout}>
+                            color: "white", backgroundColor: "#3769a5"}} onClick={logout}>
             Log Out
             </Button>
         </Link>
-        <Button variant='outlined' style={{display: "flex", 
-                            flexDirection: "row",
-                            marginLeft: "auto", 
-                            color: "white"}}>
-            {userStatus.username}
-            </Button>
+            <Link to='/example-page' style={{textDecoration: "none", marginRight: "5px"}}>
+              <Button variant='outlined' style={{display: "flex", 
+                              flexDirection: "row",
+                              marginLeft: "auto", 
+                              color: "white"}}>
+              My Account
+              </Button>
+            </Link>
       </div>
   )
 
@@ -64,7 +66,7 @@ const Navbar = (props) => {
             <Button variant='contained' style={{display: "flex", 
                             flexDirection: "row",
                             marginLeft: "auto", 
-                            color: "white"}}>
+                            color: "white", backgroundColor: "#3769a5"}}>
             Log In
             </Button>
         </Link>

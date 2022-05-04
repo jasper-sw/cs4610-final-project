@@ -83,14 +83,14 @@ function LoginPage() {
           <TextField onChange={(e) => setUsername(e.target.value)} id="filled-basic" label="Username" variant="filled" style={{ display: "flex", marginBottom: "20px", }}/>
           <TextField onChange={(e) => setPassword(e.target.value)} id="filled-basic" label="Password" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
           <div style={{justifyContent: "center"}}>
-            <Fab value="Submit" type="submit"  variant="extended" size="medium" color="primary" aria-label="add" style={{ width: "100%", backgroundColor: "blue"}}>Log in</Fab>
+            <Fab value="Submit" type="submit"  variant="extended" size="medium" color="primary" aria-label="add" style={{ width: "100%", backgroundColor: "#3769a5"}}>Log in</Fab>
           </div>
         </form>
 
         <div style={{ display: "flex" }}>
           <p>New to AggieForum?</p>
           <Link to="/create-account" style={{display: "flex", textDecoration: "none"}}>
-              <Button style={{display: "flex", color: "blue"}} variant="text">Sign Up</Button>
+              <Button style={{display: "flex", color: "#3769a5"}} variant="text">Sign Up</Button>
           </Link>
         </div>
 
