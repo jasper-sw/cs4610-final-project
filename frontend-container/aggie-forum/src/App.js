@@ -11,6 +11,10 @@ import { Grid } from '@mui/material';
 
 
 function App() {
+	// these two lines need to be in every function based react component where we use axios
+	axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+	
 	var baseURL = process.env.REACT_APP_BASE_URL
 	if (baseURL === undefined) {
 		baseURL = 'localhost:8000'
@@ -22,6 +26,7 @@ function App() {
 
 	useEffect(() => {
 		getCsrf();
+		createSubreddit();
 	}, []);
 
 	const getCsrf = async () => {
@@ -38,14 +43,23 @@ function App() {
 		})
 	}
 
-	const createPost = async () => {
-		const args = {"name": "test1asdf", "description": "test1asd", "mod_user_id": 2}
-		const res = await axios.post(`http://localhost:8000/create-subreddit/`, args)
-			.then(res => {
-				console.log(res);
-				console.log(res.data);
-			})
-	}
+	const createSubreddit = async () => {
+		const res = await axios.post(`http://${baseURL}/create-subreddit/`, {
+		  name: "test subreddit",
+		  description: "test description",
+		  mod_user_id: 1}, {
+			withCredentials: true,
+			headers: {
+			  'content-type': 'application/json',
+			  //'X-CSRFToken': `${csrfToken}`,
+			  //'Cookie': `csrftoken=${csrfToken}`
+			}
+		  })
+		.then(res => {
+		  console.log("createSubreddit returned: ")
+		  console.log(res.data);
+		})
+	  }
 
   return (
 	<div>
