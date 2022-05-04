@@ -11,12 +11,16 @@ import { Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = (props) => {
+  var baseURL = process.env.REACT_APP_BASE_URL
+	if (baseURL == undefined) {
+		baseURL = 'localhost:8000'
+	}
 
   const [userStatus, setUserStatus] = useState(true);
   const navigate = useNavigate();
 
   const whoami = async () => {
-    const res = await axios.get(`http://localhost:8000/whoami/`, {withCredentials: true})
+    const res = await axios.get(`http://${baseURL}/whoami/`, {withCredentials: true})
     .then(res => {
       console.log(res.data);
       setUserStatus(res.data)
@@ -24,7 +28,7 @@ const Navbar = (props) => {
   }
 
   const logout = async () => {
-    const res = await axios.get(`http://localhost:8000/logout/`, {withCredentials: true})
+    const res = await axios.get(`http://${baseURL}/logout/`, {withCredentials: true})
     .then(res => {
       console.log(res.data);
     })

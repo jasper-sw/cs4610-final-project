@@ -10,6 +10,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 function CreateAccount() {
+  var baseURL = process.env.REACT_APP_BASE_URL
+	if (baseURL == undefined) {
+		baseURL = 'localhost:8000'
+	}
   const [csrfToken, setCsrfToken] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
@@ -32,7 +36,7 @@ function CreateAccount() {
   }
 
   const getCsrf = async () => {
-    const res = await axios.get(`http://localhost:8000/csrf/`)
+    const res = await axios.get(`http://${baseURL}/csrf/`)
     .then(res => {
       console.log(res.data);
     })
@@ -40,7 +44,7 @@ function CreateAccount() {
 
 
   const createAccount = async () => {
-    const res = await axios.post(`http://localhost:8000/create-account/`, {
+    const res = await axios.post(`http://${baseURL}/create-account/`, {
       username: username,
       password: password,
       first_name: firstName,
