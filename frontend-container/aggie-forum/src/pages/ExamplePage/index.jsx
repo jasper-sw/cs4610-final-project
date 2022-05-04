@@ -10,6 +10,14 @@ import { Paper } from "@mui/material";
 
 
 function ExamplePage() {
+	var baseURL = process.env.REACT_APP_BASE_URL
+	if (baseURL == undefined) {
+		baseURL = 'localhost:8000'
+		console.log("baseURL env var not set, defaulting to localhost")
+	}
+	else {
+		console.log(`baseURL env var set: [${baseURL}]`)
+	}
 	const [sample,setSample] = useState([]);
 	const [csrfToken, setCsrfToken] = useState(null);
 	

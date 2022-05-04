@@ -11,6 +11,10 @@ import { Typography } from '@mui/material';
 
 
 function LoginPage() {
+  var baseURL = process.env.REACT_APP_BASE_URL
+	if (baseURL == undefined) {
+		baseURL = 'localhost:8000'
+	}
   const [csrfToken, setCsrfToken] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
@@ -30,28 +34,28 @@ function LoginPage() {
   }
 
   const getCsrf = async () => {
-    const res = await axios.get(`http://localhost:8000/csrf/`)
+    const res = await axios.get(`http://${baseURL}/csrf/`)
     .then(res => {
       console.log(res.data);
     })
   }
 
   const whoami = async () => {
-    const res = await axios.get(`http://localhost:8000/whoami/`, {withCredentials: true})
+    const res = await axios.get(`http://${baseURL}/whoami/`, {withCredentials: true})
     .then(res => {
       console.log(res.data);
     })
   }
 
   const logout = async () => {
-    const res = await axios.get(`http://localhost:8000/logout/`, {withCredentials: true})
+    const res = await axios.get(`http://${baseURL}/logout/`, {withCredentials: true})
     .then(res => {
       console.log(res.data);
     })
   }
 
   const sendCreds = async () => {
-    const res = await axios.post(`http://localhost:8000/login/`, {
+    const res = await axios.post(`http://${baseURL}/login/`, {
       username: username,
       password: password}, {
         withCredentials: true,
