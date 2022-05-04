@@ -1,4 +1,4 @@
-# cs4610-final-project
+# cs4610-final-project | AggieForum
 
 # Requirements
 - Have docker desktop installed on your local system
