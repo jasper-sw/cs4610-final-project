@@ -80,7 +80,7 @@ function CreateAccount() {
                   <TextField onChange={(e) => setFirstName(e.target.value)} type="text" id="filled-basic" label="First Name" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
                   <TextField onChange={(e) => setLastName(e.target.value)} id="filled-basic" label="Last Name" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
                   <div style={{justifyContent: "center"}}>
-                    <Fab value="Submit" type="submit"  variant="extended" size="medium" color="primary" aria-label="add" style={{ width: "100%", backgroundColor: "blue", marginBottom: "20px"}}>Submit</Fab>
+                    <Fab value="Submit" type="submit"  variant="extended" size="medium" color="primary" aria-label="add" style={{ width: "100%", backgroundColor: "#3769a5", marginBottom: "20px"}}>Submit</Fab>
                   </div>
                 </form>
 			</div>

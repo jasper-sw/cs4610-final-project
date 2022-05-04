@@ -9,6 +9,7 @@ import { Grid } from "@mui/material";
 import { Paper } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Divider } from "@mui/material";
 
 
 function ExamplePage() {
@@ -51,64 +52,82 @@ function ExamplePage() {
 	} else {
 		console.log("LOGGED IN")
 		return (
-			<div style={{backgroundColor: "#dddddb", height: "100%"}}>
+			<div>
 				<Navbar />
-				<div style={{ marginLeft: "150px", marginRight: "150px" }}>
-					<div>
-						<h4>Trending</h4>
-						<Grid container spacing={2}>
-							<Grid item xs={3}>
-								<ForumCard />
+				<div style={{backgroundColor: "#dddddb", height: "100%", padding: "10px"}}>
+					<div style={{ marginLeft: "150px", marginRight: "150px" }}>
+						<div>
+							<Grid container spacing={3}>
+								<Grid item xs={8}>
+									<h4>My Subscriptions</h4>
+								</Grid>
+								<Grid item xs={4}>
+									<h4>My Forums</h4>
+								</Grid>
+
 							</Grid>
-							<Grid item xs={3}>
-								<ForumCard />
-							</Grid>
-							<Grid item xs={3}>
-								<ForumCard />
-							</Grid>
-							<Grid item xs={3}>
-								<ForumCard />
-							</Grid>
-						</Grid>
-					</div>
-		
-					<div>
-						<h4>Recent Forums</h4>
-						<Grid container spacing={3}>
-							<Grid item xs={8}>
-								<Grid container spacing={2}>
-									<Grid item xs={12}>
-										<ForumCard />
+							<Grid container spacing={3}>
+								<Grid item xs={8}>
+									<Grid container spacing={1}>
+										<Grid item xs={12}>
+											<ForumCard />
+										</Grid>
+										<Grid item xs={12}>
+											<ForumCard />
+										</Grid>
+										<Grid item xs={12}>
+											<ForumCard />
+										</Grid>
+										<Grid item xs={12}>
+											<ForumCard />
+										</Grid>
+										<Grid item xs={12}>
+											<ForumCard />
+										</Grid>
+										<Grid item xs={12}>
+											<ForumCard />
+										</Grid>
+										<Grid item xs={12}>
+											<ForumCard />
+										</Grid>
+										<Grid item xs={12}>
+											<ForumCard />
+										</Grid>
 									</Grid>
-									<Grid item xs={12}>
-										<ForumCard />
-									</Grid>
-									<Grid item xs={12}>
-										<ForumCard />
-									</Grid>
-									<Grid item xs={12}>
-										<ForumCard />
+								</Grid>
+			
+								<Grid item xs={4}>
+									<Grid container spacing={2}>
+										<Grid item xs={12}>
+											<Card style={{padding: "10px"}}>
+												<ForumCard />
+												<Divider />
+												<ForumCard />
+												<Divider />
+												<ForumCard />
+												<Divider />
+											</Card>
+										</Grid>
+
+										<Grid item xs={12}>
+											<h4>My Posts</h4>
+											<Card style={{padding: "10px"}}>
+												<Card style={{padding: "10px", margin: "10px"}}>
+													<h3>Forum Title</h3>
+													<h5>Post Title</h5>
+													<p>Post Description</p>
+												</Card>
+												<Card style={{padding: "10px", margin: "10px"}}>
+													<h3>Forum Title</h3>
+													<h5>Post Title</h5>
+													<p>Post Description</p>
+												</Card>
+											</Card>
+										</Grid>
 									</Grid>
 								</Grid>
 							</Grid>
-		
-							<Grid item xs={4}>
-								<Grid container spacing={2}>
-									<Grid item xs={12}>
-										<ForumCard />
-									</Grid>
-									<Grid item xs={12}>
-										<ForumCard />
-									</Grid>
-									<Grid item xs={12}>
-										<ForumCard />
-									</Grid>
-									<Grid item xs={12}>
-										<ForumCard />
-									</Grid>
-								</Grid>
-							</Grid>
-						</Grid>
+						</div>
 					</div>
 				</div>
 			</div>

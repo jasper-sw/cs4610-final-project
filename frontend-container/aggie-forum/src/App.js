@@ -7,6 +7,7 @@ import ForumCard from './components/ForumCard/ForumCard'
 import { Divider } from '@mui/material';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { Grid } from '@mui/material';
 
 
 function App() {
@@ -50,35 +51,31 @@ function App() {
 	<div>
 		<Navbar/>
 		<div style={{backgroundColor: "#dddddb", minHeight: "100vh", padding: "10px"}}>
-		<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#ABAAA5", borderRadius: "10px", margin: "10px"}}>
-				<h1 style={{display: "flex", padding: "10px"}}>Welcome to Aggie Forums</h1>
-				<Link to="/example-page" style={{display: "flex", padding: "10px", textDecoration: "none"}}>
-				  <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
-					example page
-				  </Button>
-				  <Button onClick={createPost} variant="contained">CREATE POST TEST</Button>
-				</Link>
-			</div>
-		<div style={{display: "flex", flexDirection: "column", marginLeft: "10%", marginRight: "10%", marginTop: "3%"}}>
-		<h4>Recent Forums</h4>
-			<div style={{display: "flex", flexDirection: "column", backgroundColor: "white", borderRadius: "10px", minWidth: "70%"}}>
-				<ForumCard />
-				<Divider />
-				<ForumCard />
-				<Divider />
-				<ForumCard />
-				<Divider />
-				<ForumCard />
-				<Divider />
-				<ForumCard />
-				<Divider />
-				<ForumCard />
-				<Divider />
-				<ForumCard />
-				<Divider />
+			<div style={{display: "flex", flexDirection: "column", marginLeft: "10%", marginRight: "10%", marginTop: "3%"}}>
+				<Grid container spacing={0} style={{alignContent: "center", textAlign: "center"}}>
+					<Grid item xs={12}>
+						<h1 style={{fontSize: "60px" }}>Welcome to AggieForums</h1>
+					</Grid>
+				</Grid>
+				<h4>Recent Forums</h4>
+				<div style={{display: "flex", flexDirection: "column", backgroundColor: "white", borderRadius: "10px", minWidth: "70%"}}>
+					<ForumCard />
+					<Divider />
+					<ForumCard />
+					<Divider />
+					<ForumCard />
+					<Divider />
+					<ForumCard />
+					<Divider />
+					<ForumCard />
+					<Divider />
+					<ForumCard />
+					<Divider />
+					<ForumCard />
+					<Divider />
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
   );
 }
