@@ -10,6 +10,7 @@ import { Paper } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
+import { Fab } from "@mui/material";
 
 
 function ExamplePage() {
@@ -55,7 +56,7 @@ function ExamplePage() {
 			<div>
 				<Navbar />
 				<div style={{backgroundColor: "#dddddb", height: "100%", padding: "10px"}}>
-					<div style={{ marginLeft: "150px", marginRight: "150px" }}>
+					<div style={{ marginLeft: "10%", marginRight: "10%" }}>
 						<div>
 							<Grid container spacing={3}>
 								<Grid item xs={8}>
@@ -113,14 +114,28 @@ function ExamplePage() {
 											<h4>My Posts</h4>
 											<Card style={{padding: "10px"}}>
 												<Card style={{padding: "10px", margin: "10px"}}>
-													<h3>Forum Title</h3>
-													<h5>Post Title</h5>
-													<p>Post Description</p>
+													<Grid container spacing={1}>
+														<Grid item xs={8}>
+															<h3>Post Title</h3>
+															<h5>Forum Title</h5>
+															<p>Post Description</p>
+														</Grid>
+														<Grid item xs={4} style={{ alignSelf: "center" }}>
+															<Fab style={{ backgroundColor: "red", color: "white" }}>X</Fab>
+														</Grid>
+													</Grid>
 												</Card>
 												<Card style={{padding: "10px", margin: "10px"}}>
-													<h3>Forum Title</h3>
-													<h5>Post Title</h5>
-													<p>Post Description</p>
+													<Grid container spacing={1}>
+														<Grid item xs={8}>
+															<h3>Post Title</h3>
+															<h5>Forum Title</h5>
+															<p>Post Description</p>
+														</Grid>
+														<Grid item xs={4} style={{ alignSelf: "center" }}>
+															<Fab style={{ backgroundColor: "red", color: "white" }}>X</Fab>
+														</Grid>
+													</Grid>
 												</Card>
 											</Card>
 										</Grid>
