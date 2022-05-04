@@ -7,6 +7,8 @@ import Navbar from "../../components/Navbar/navbar";
 import ForumCard from "../../components/ForumCard/ForumCard";
 import { Grid } from "@mui/material";
 import { Paper } from "@mui/material";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 function ExamplePage() {
@@ -20,70 +22,97 @@ function ExamplePage() {
 	}
 	const [sample,setSample] = useState([]);
 	const [csrfToken, setCsrfToken] = useState(null);
-	
-	
-	return (
-	<div style={{backgroundColor: "#dddddb", height: "100%"}}>
-		<Navbar />
-		<div style={{ marginLeft: "150px", marginRight: "150px" }}>
-			<div>
-				<h4>Trending</h4>
-				<Grid container spacing={2}>
-					<Grid item xs={3}>
-						<ForumCard />
-					</Grid>
-					<Grid item xs={3}>
-						<ForumCard />
-					</Grid>
-					<Grid item xs={3}>
-						<ForumCard />
-					</Grid>
-					<Grid item xs={3}>
-						<ForumCard />
-					</Grid>
-				</Grid>
-			</div>
+	const [userStatus, setUserStatus] = useState(true);
+  	const navigate = useNavigate();
 
-			<div>
-				<h4>Recent Forums</h4>
-				<Grid container spacing={3}>
-					<Grid item xs={8}>
+	const whoami = async () => {
+		const res = await axios.get(`http://${baseURL}/whoami/`, {withCredentials: true})
+		.then(res => {
+			console.log(res.data);
+			setUserStatus(res.data)
+		})
+	};
+
+	useEffect(() => {
+		whoami()
+		getCsrf()
+	}, []);
+
+	const getCsrf = async () => {
+		const res = await axios.get(`http://${baseURL}/csrf/`)
+		.then(res => {
+		  console.log(res.data);
+		})
+	  }
+	
+	
+	if (userStatus.isAuthenticated === false) {
+		navigate('/login')
+	} else {
+		console.log("LOGGED IN")
+		return (
+			<div style={{backgroundColor: "#dddddb", height: "100%"}}>
+				<Navbar />
+				<div style={{ marginLeft: "150px", marginRight: "150px" }}>
+					<div>
+						<h4>Trending</h4>
 						<Grid container spacing={2}>
-							<Grid item xs={12}>
+							<Grid item xs={3}>
 								<ForumCard />
 							</Grid>
-							<Grid item xs={12}>
+							<Grid item xs={3}>
 								<ForumCard />
 							</Grid>
-							<Grid item xs={12}>
+							<Grid item xs={3}>
 								<ForumCard />
 							</Grid>
-							<Grid item xs={12}>
+							<Grid item xs={3}>
 								<ForumCard />
 							</Grid>
 						</Grid>
-					</Grid>
-
-					<Grid item xs={4}>
-						<Grid container spacing={2}>
-							<Grid item xs={12}>
-								<ForumCard />
+					</div>
+		
+					<div>
+						<h4>Recent Forums</h4>
+						<Grid container spacing={3}>
+							<Grid item xs={8}>
+								<Grid container spacing={2}>
+									<Grid item xs={12}>
+										<ForumCard />
+									</Grid>
+									<Grid item xs={12}>
+										<ForumCard />
+									</Grid>
+									<Grid item xs={12}>
+										<ForumCard />
+									</Grid>
+									<Grid item xs={12}>
+										<ForumCard />
+									</Grid>
+								</Grid>
 							</Grid>
-							<Grid item xs={12}>
-								<ForumCard />
-							</Grid>
-							<Grid item xs={12}>
-								<ForumCard />
-							</Grid>
-							<Grid item xs={12}>
-								<ForumCard />
+		
+							<Grid item xs={4}>
+								<Grid container spacing={2}>
+									<Grid item xs={12}>
+										<ForumCard />
+									</Grid>
+									<Grid item xs={12}>
+										<ForumCard />
+									</Grid>
+									<Grid item xs={12}>
+										<ForumCard />
+									</Grid>
+									<Grid item xs={12}>
+										<ForumCard />
+									</Grid>
+								</Grid>
 							</Grid>
 						</Grid>
-					</Grid>
-				</Grid>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-	);
+		);
+	}
 }
 export default ExamplePage;
