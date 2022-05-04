@@ -9,6 +9,7 @@ class Subreddit(models.Model):
     description = models.CharField(max_length=1024, null=False)
     # the mod of this subreddit
     mod_user_id = models.IntegerField(null=True, blank=False)
+    objects = models.Manager()
 
     def __str__(self):
         return '[Subreddit] Subreddit_id: [{}], ' \
@@ -19,7 +20,7 @@ class Subreddit(models.Model):
                                           self.description,
                                           self.mod_user_id)
 
-    def __dict__(self):
+    def to_dict(self):
         return {"id": self.id,
                 "name": self.name,
                 "description": self.description,
@@ -32,6 +33,7 @@ class Subscription(models.Model):
     id = models.IntegerField(primary_key=True, blank=False)
     user_id = models.IntegerField(null=True, blank=False)
     subreddit_id = models.IntegerField(null=True, blank=False)
+    objects = models.Manager()
 
     def __str__(self):
         return '[Subscription] ' \
@@ -41,7 +43,7 @@ class Subscription(models.Model):
                                            self.user_id,
                                            self.subreddit_id)
 
-    def __dict__(self):
+    def to_dict(self):
         return {"id": self.id, "user_id": self.user_id, "subreddit_id": self.subreddit_id}
 
 
@@ -56,6 +58,7 @@ class Post(models.Model):
     downvote_count = models.IntegerField(default=0, blank=False)
     # the subreddit this post belongs to
     subreddit_id = models.IntegerField(null=True, blank=False)
+    objects = models.Manager()
 
     def __str__(self):
         return "[Post] Post_id: [{}], " \
@@ -73,7 +76,7 @@ class Post(models.Model):
                                            self.downvote_count,
                                            self.subreddit_id)
 
-    def __dict__(self):
+    def to_dict(self):
         return {"id": self.id,
                 "title": self.title,
                 "body": self.body,
@@ -94,6 +97,7 @@ class Comment(models.Model):
     downvote_count = models.IntegerField(default=0, blank=False)
     # the post this comment belongs to
     post_id = models.IntegerField(null=True, blank=False)
+    objects = models.Manager()
 
     def __str__(self):
         return "[Comment] comment_id: [{}], " \
@@ -110,7 +114,7 @@ class Comment(models.Model):
                                       self.downvote_count,
                                       self.post_id)
 
-    def __dict__(self):
+    def to_dict(self):
         return {"id": self.id,
                 "body": self.body,
                 "posted_by_user_id": self.posted_by_user_id,

@@ -147,8 +147,9 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
     "cache-control",
     "pragma",
-    "Set-Cookie"
-    "Cookie"
+    "Set-Cookie",
+    "Cookie",
+    "X-CSRFToken"
 ]
 CORS_EXPOSE_HEADERS = [
     "Set-Cookie",

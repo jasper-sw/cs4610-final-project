@@ -57,9 +57,9 @@ class CreateSubreddit(APIView):
                                                  description=body["description"],
                                                  mod_user_id=body["mod_user_id"])
         new_subreddit.save()
-        created_subreddit = Subreddit.objects.filter(name=body["name"],
-                                                     description=body["description"],
-                                                     mod_user_id=body["mod_user_id"])
+        created_subreddit = (Subreddit.objects.filter(name=body["name"],
+                                                      description=body["description"],
+                                                      mod_user_id=body["mod_user_id"]))[0]
         return JsonResponse({"Created subreddit: ": str(created_subreddit)})
 
 
@@ -172,7 +172,7 @@ class GetUserSubscriptions(APIView):
         subs = Subscription.objects.filter(user_id=body["user_id"])
         subs_list = []
         for sub in subs:
-            subs_list.append(sub.__dict__())
+            subs_list.append(sub.to_dict())
         return JsonResponse({"Subscriptions for user: [{}]".format(request.user.id): subs_list})
 
 
@@ -186,7 +186,7 @@ class GetUserPosts(APIView):
         posts = Post.objects.filter(posted_by_user_id=body["user_id"])
         posts_list = []
         for post in posts:
-            posts_list.append(post.__dict__())
+            posts_list.append(post.to_dict())
         return JsonResponse({"Posts for user: [{}]".format(request.user.id): posts_list})
 
 
@@ -200,7 +200,7 @@ class GetUserComments(APIView):
         comments = Comment.objects.filter(posted_by_user_id=body["user_id"])
         comments_list = []
         for comment in comments:
-            comments_list.append(comment.__dict__())
+            comments_list.append(comment.to_dict())
         return JsonResponse({"Comments for user: [{}]".format(request.user.id): comments_list})
 
 
