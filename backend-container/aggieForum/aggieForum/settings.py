@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -162,5 +163,7 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost',
                         'http://localhost:8000/csrf/'
                         'https://localhost',
                         'https://localhost:8000',
-                        'http://localhost:3000',]
+                        'http://localhost:3000',
+                        "http://{}".format(os.environ["BASE_URL"])]
+print("API CONFIGURED WITH BASE URL: [{}]".format(os.environ["BASE_URL"]))
 
