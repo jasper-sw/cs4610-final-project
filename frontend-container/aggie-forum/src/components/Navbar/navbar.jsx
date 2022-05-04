@@ -4,8 +4,77 @@ import HomeIcon from '@mui/icons-material/Home';
 import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Paper } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = (props) => {
+
+  const [userStatus, setUserStatus] = useState(true);
+  const navigate = useNavigate();
+
+  const whoami = async () => {
+    const res = await axios.get(`http://localhost:8000/whoami/`, {withCredentials: true})
+    .then(res => {
+      console.log(res.data);
+      setUserStatus(res.data)
+    })
+  }
+
+  const logout = async () => {
+    const res = await axios.get(`http://localhost:8000/logout/`, {withCredentials: true})
+    .then(res => {
+      console.log(res.data);
+    })
+  }
+
+  useEffect(() => {
+    whoami()
+  }, []);
+
+  let isLoggedIn = (
+    <div style={{display: "flex", flexDirection: "row", marginLeft: "auto", marginRight: "20px"}}>
+        <Link to="/login" style={{textDecoration: "none", marginRight: "5px"}}>
+            <Button variant='contained' style={{display: "flex", 
+                            flexDirection: "row",
+                            marginLeft: "auto", 
+                            color: "white"}} onClick={logout}>
+            Log Out
+            </Button>
+        </Link>
+        <Button variant='outlined' style={{display: "flex", 
+                            flexDirection: "row",
+                            marginLeft: "auto", 
+                            color: "white"}}>
+            {userStatus.username}
+            </Button>
+      </div>
+  )
+
+  if (userStatus.isAuthenticated === false) {
+    isLoggedIn = (
+      <div style={{display: "flex", flexDirection: "row", marginLeft: "auto", marginRight: "20px"}}>
+        <Link to="/login" style={{textDecoration: "none", marginRight: "5px"}}>
+            <Button variant='contained' style={{display: "flex", 
+                            flexDirection: "row",
+                            marginLeft: "auto", 
+                            color: "white"}}>
+            Log In
+            </Button>
+        </Link>
+          <Link to="/create-account" style={{textDecoration: "none", marginRight: "5px"}}>
+            <Button variant='outlined' style={{display: "flex", 
+                                flexDirection: "row",
+                                marginLeft: "auto", 
+                                marginRight: "auto",
+                                color: "white"}}
+                >Sign Up</Button>
+          </Link>
+      </div>
+    )
+  }
 
   return (
       <AppBar position="static" style={{backgroundColor: "#002438"}}>
@@ -13,7 +82,7 @@ const Navbar = () => {
             <IconButton component={Link} to="/" aria-label="home" style={{color: "white", textDecoration: "none"}}>
                 <HomeIcon />
             </IconButton>
-          <Typography variant="h6" style={{textDecoration: "none"}}>aggieForum</Typography>
+          <Typography variant="h6" style={{textDecoration: "none"}}>AggieForum</Typography>
           <div style={{display: "flex", flexDirection: "row", marginLeft: "50px", width: "60%"}}>
             <TextField
             id="outlined-basic"
@@ -27,22 +96,7 @@ const Navbar = () => {
               <SearchIcon />
           </IconButton>
           </div>
-          <div style={{display: "flex", flexDirection: "row", marginLeft: "auto", marginRight: "20px"}}>
-          <Link to="/create-account" style={{textDecoration: "none"}}>
-            <Button style={{display: "flex", 
-                                flexDirection: "row",
-                                marginLeft: "auto", 
-                                color: "white"}}
-                >Signup</Button>
-          </Link>
-          <Link to="/login" style={{textDecoration: "none"}}>
-              <Button style={{display: "flex", 
-                              flexDirection: "row",
-                              marginLeft: "auto", 
-                              color: "white"}}
-              >Sign in</Button>
-          </Link>
-          </div>
+          {isLoggedIn}
         </Toolbar>
       </AppBar>
     );

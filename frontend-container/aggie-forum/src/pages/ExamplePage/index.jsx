@@ -1,38 +1,78 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, Card, ListItem } from '@mui/material';
 import axios from 'axios';
 import Navbar from "../../components/Navbar/navbar";
+import ForumCard from "../../components/ForumCard/ForumCard";
+import { Grid } from "@mui/material";
+import { Paper } from "@mui/material";
 
 
 function ExamplePage() {
 	const [sample,setSample] = useState([]);
-
-	const whoami = async () => {
-		const res = await axios.get(`http://localhost:8000/whoami/`, {withCredentials: true})
-		.then(res => {
-		  console.log(res.data);
-		})
-	}
+	const [csrfToken, setCsrfToken] = useState(null);
 	
 	
 	return (
-	<div style={{backgroundColor: "#dddddb", minHeight: "100vh"}}>
-		<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-			<Navbar />
-			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#ABAAA5", borderRadius: "10px"}}>
-				<h1 style={{display: "flex", padding: "10px"}}>HELLO WORLD PAGE</h1>
-				<Link to="/" style={{display: "flex", padding: "10px", textDecoration: "none"}}>
-				  <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
-					Home Page
-				  </Button>
-				</Link>
-				<div style={{display: "flex", padding: "10px"}}>
-				<Button onClick={whoami} style={{backgroundColor: "blue", color: "white"}}>
-					Whoami
-				</Button>
-				</div>
+	<div style={{backgroundColor: "#dddddb", height: "100%"}}>
+		<Navbar />
+		<div style={{ marginLeft: "150px", marginRight: "150px" }}>
+			<div>
+				<h4>Trending</h4>
+				<Grid container spacing={2}>
+					<Grid item xs={3}>
+						<ForumCard />
+					</Grid>
+					<Grid item xs={3}>
+						<ForumCard />
+					</Grid>
+					<Grid item xs={3}>
+						<ForumCard />
+					</Grid>
+					<Grid item xs={3}>
+						<ForumCard />
+					</Grid>
+				</Grid>
+			</div>
+
+			<div>
+				<h4>Recent Forums</h4>
+				<Grid container spacing={3}>
+					<Grid item xs={8}>
+						<Grid container spacing={2}>
+							<Grid item xs={12}>
+								<ForumCard />
+							</Grid>
+							<Grid item xs={12}>
+								<ForumCard />
+							</Grid>
+							<Grid item xs={12}>
+								<ForumCard />
+							</Grid>
+							<Grid item xs={12}>
+								<ForumCard />
+							</Grid>
+						</Grid>
+					</Grid>
+
+					<Grid item xs={4}>
+						<Grid container spacing={2}>
+							<Grid item xs={12}>
+								<ForumCard />
+							</Grid>
+							<Grid item xs={12}>
+								<ForumCard />
+							</Grid>
+							<Grid item xs={12}>
+								<ForumCard />
+							</Grid>
+							<Grid item xs={12}>
+								<ForumCard />
+							</Grid>
+						</Grid>
+					</Grid>
+				</Grid>
 			</div>
 		</div>
 	</div>

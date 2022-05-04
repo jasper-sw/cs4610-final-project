@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Navbar from "../../components/Navbar/navbar";
 import { Typography } from '@mui/material';
+import { TextField } from '@mui/material';
+import { Fab } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 function CreateAccount() {
@@ -13,6 +16,7 @@ function CreateAccount() {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
+  const navigate = useNavigate()
   axios.defaults.withCredentials = true;
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -53,6 +57,8 @@ function CreateAccount() {
     .then(res => {
       console.log(res.data);
     })
+
+    navigate('/');
   }
 
 
@@ -61,36 +67,18 @@ function CreateAccount() {
     <div style={{backgroundColor: "#dddddb", minHeight: "100vh"}}>
 		<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <Navbar />
-			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#ABAAA5", borderRadius: "10px"}}>
+			<div style={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "white", borderRadius: "10px", minWidth: "50%", margin: "30px"}}>
                 <Typography variant="h5" style={{display: "flex", padding: "10px"}}>Create Account</Typography>
                 <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column"}}>
-                <label>
-                    Username:
-                    <input type="text" name="username" onChange={(e) => setUsername(e.target.value)}/>
-                </label>
-                <label>
-                    Password:
-                    <input type="text" name="password" onChange={(e) => setPassword(e.target.value)}/>
-                </label>
-                <label>
-                    Email:
-                    <input type="text" name="email" onChange={(e) => setEmail(e.target.value)}/>
-                </label>
-                <label>
-                    First Name:
-                    <input type="text" name="first-name" onChange={(e) => setFirstName(e.target.value)}/>
-                </label>
-                <label>
-                    Last Name:
-                    <input type="text" name="last-name" onChange={(e) => setLastName(e.target.value)}/>
-                </label>
-                <input type="submit" value="Submit" />
+                  <TextField onChange={(e) => setUsername(e.target.value)} type="text" id="filled-basic" label="Username" variant="filled" style={{ display: "flex", marginBottom: "20px", }}/>
+                  <TextField onChange={(e) => setPassword(e.target.value)} type="password" id="filled-basic" label="Password" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
+                  <TextField onChange={(e) => setEmail(e.target.value)} type="email" id="filled-basic" label="Email" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
+                  <TextField onChange={(e) => setFirstName(e.target.value)} type="text" id="filled-basic" label="First Name" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
+                  <TextField onChange={(e) => setLastName(e.target.value)} id="filled-basic" label="Last Name" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
+                  <div style={{justifyContent: "center"}}>
+                    <Fab value="Submit" type="submit"  variant="extended" size="medium" color="primary" aria-label="add" style={{ width: "100%", backgroundColor: "blue", marginBottom: "20px"}}>Submit</Fab>
+                  </div>
                 </form>
-                <Link to="/" style={{display: "flex", padding: "10px", textDecoration: "none"}}>
-                    <Button style={{display: "flex", backgroundColor: "blue", color: "white"}}>
-                    Home Page
-                    </Button>
-                </Link>
 			</div>
 		</div>
 	</div>
