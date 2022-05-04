@@ -158,12 +158,17 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000"
 ]
 CORS_ALLOW_CREDENTIALS = True
+try:
+    address_with_base_url = "http://{}".format(os.environ["BASE_URL"])
+    print("API CONFIGURED WITH BASE URL: [{}]".format(os.environ["BASE_URL"]))
+except KeyError:
+    print("API CONFIGURED WITH DEFAULT BASE URL: localhost:8000")
+    address_with_base_url = "http://localhost:8000"
 CSRF_TRUSTED_ORIGINS = ['http://localhost',
                         'http://localhost:8000',
                         'http://localhost:8000/csrf/'
                         'https://localhost',
                         'https://localhost:8000',
                         'http://localhost:3000',
-                        "http://{}".format(os.environ["BASE_URL"])]
-print("API CONFIGURED WITH BASE URL: [{}]".format(os.environ["BASE_URL"]))
+                        address_with_base_url]
 

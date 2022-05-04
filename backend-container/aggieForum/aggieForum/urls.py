@@ -4,7 +4,19 @@ from aggieForumApp.views import (get_csrf,
                                  logout_view,
                                  session_view,
                                  whoami_view,
-                                 CreateAccount)
+                                 CreateAccount,
+                                 CreateSubreddit,
+                                 CreatePost,
+                                 CreateSubscription,
+                                 CreateComment,
+                                 DeleteSubreddit,
+                                 DeletePost,
+                                 DeleteSubscription,
+                                 DeleteComment,
+                                 DeleteAccount,
+                                 GetUserSubscriptions,
+                                 GetUserPosts,
+                                 GetUserComments)
 
 urlpatterns = [
     path('csrf/', get_csrf, name='csrf'),
@@ -12,6 +24,18 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('session/', session_view, name='session'),
     path('whoami/', whoami_view, name='whoami'),
-    path('create-account/', CreateAccount.as_view(), name='create-accout')
+    path('create-account/', CreateAccount.as_view(), name='create-accout'),
+    path('delete-account/', DeleteAccount.as_view(), name='delete-accout'),
+    path('create-subreddit/', CreateSubreddit.as_view(), name='create-subreddit'),
+    path('delete-subreddit/', DeleteSubreddit.as_view(), name='delete-subreddit'),
+    path('create-post/', CreatePost.as_view(), name='create-post'),
+    path('delete-post/', DeletePost.as_view(), name='delete-post'),
+    path('create-subscription/', CreateSubscription.as_view(), name='create-subscription'),
+    path('delete-subscription/', DeleteSubscription.as_view(), name='delete-subscription'),
+    path('create-comment/', CreateComment.as_view(), name='create-comment'),
+    path('delete-comment/', DeleteComment.as_view(), name='delete-comment'),
+    path('get-user-subscriptions/', GetUserSubscriptions.as_view(), name='get-user-subscriptions'),
+    path('get-user-posts/', GetUserPosts.as_view(), name='get-user-posts'),
+    path('get-user-comments/', GetUserComments.as_view(), name='get-user-comments')
 ]
 
