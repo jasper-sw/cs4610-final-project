@@ -177,7 +177,7 @@ class GetUserSubscriptions(APIView):
                 subs_list.append((Subreddit.objects.filter(id=sub.id))[0].to_dict())
             except IndexError:
                 errors_list.append("Couldn't add subreddit with id: {}".format(sub.id))
-        return JsonResponse({"subscriptions": subs_list, "errors": errors_list,"user_id": request.user.id})
+        return JsonResponse({"subscriptions": subs_list, "errors": errors_list, "user_id": request.user.id})
 
 
 class GetUserPosts(APIView):
@@ -255,14 +255,14 @@ class IncrementUpvote(APIView):
         print(body)
         if body["item_type"] == "post":
             post = (Post.objects.filter(id=body["item_id"]))[0]
-            original_post = post.upvote_count
+            original_post = post
             post.upvote_count += 1
             post.save()
             return JsonResponse({"updated_object": post.to_dict(),
                                  "old_object": original_post.to_dict()})
         elif body["item_type"] == "comment":
             comment = (Comment.objects.filter(id=body["item_id"]))[0]
-            original_comment = comment.upvote_count
+            original_comment = comment
             comment.upvote_count += 1
             comment.save()
             return JsonResponse({"updated_object": comment.to_dict(),
@@ -280,14 +280,14 @@ class DecrementUpvote(APIView):
         print(body)
         if body["item_type"] == "post":
             post = (Post.objects.filter(id=body["item_id"]))[0]
-            original_post = post.upvote_count
+            original_post = post
             post.upvote_count -= 1
             post.save()
             return JsonResponse({"updated_object": post.to_dict(),
                                  "old_object": original_post.to_dict()})
         elif body["item_type"] == "comment":
             comment = (Comment.objects.filter(id=body["item_id"]))[0]
-            original_comment = comment.upvote_count
+            original_comment = comment
             comment.upvote_count -= 1
             comment.save()
             return JsonResponse({"updated_object": comment.to_dict(),
