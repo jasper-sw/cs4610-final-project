@@ -1,11 +1,12 @@
 import { AppBar,Toolbar,Typography,IconButton,Button,Card } from '@mui/material';
+import { useState } from 'react';
 
-const ForumCard = () => {
+function ForumCard (props) {
 
   return (
       <Card style={{padding: "10px"}}>
-        <h3>Forum Title</h3>
-        <p>Forum Description</p>
+        <h3>{props.title == null ? "default title" : props.title}</h3>
+        <p>{props.description == null ? "default description" : props.description}</p>
       </Card>
     );
   };
