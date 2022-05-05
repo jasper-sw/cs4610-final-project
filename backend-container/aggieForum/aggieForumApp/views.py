@@ -171,9 +171,13 @@ class GetUserSubscriptions(APIView):
         print(body)
         subs = Subscription.objects.filter(user_id=body["user_id"])
         subs_list = []
+        errors_list = []
         for sub in subs:
-            subs_list.append((Subreddit.objects.filter(id=sub.id))[0].to_dict())
-        return JsonResponse({"subscriptions": subs_list, "user_id": request.user.id})
+            try:
+                subs_list.append((Subreddit.objects.filter(id=sub.id))[0].to_dict())
+            except IndexError:
+                errors_list.append("Couldn't add subreddit with id: {}".format(sub.id))
+        return JsonResponse({"subscriptions": subs_list, "errors": errors_list,"user_id": request.user.id})
 
 
 class GetUserPosts(APIView):
@@ -240,6 +244,56 @@ class GetInfo(APIView):
         except IndexError:
             return JsonResponse({"info": "NO ITEM WITH ID: [{}] OF TYPE: [{}]".format(body["item_id"],
                                                                                       body["info_type"])})
+
+
+class IncrementUpvote(APIView):
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return JsonResponse({'isAuthenticated': False})
+        body = request.data
+        print(body)
+        if body["item_type"] == "post":
+            post = (Post.objects.filter(id=body["item_id"]))[0]
+            original_post = post.upvote_count
+            post.upvote_count += 1
+            post.save()
+            return JsonResponse({"updated_object": post.to_dict(),
+                                 "old_object": original_post.to_dict()})
+        elif body["item_type"] == "comment":
+            comment = (Comment.objects.filter(id=body["item_id"]))[0]
+            original_comment = comment.upvote_count
+            comment.upvote_count += 1
+            comment.save()
+            return JsonResponse({"updated_object": comment.to_dict(),
+                                 "old_object": original_comment.to_dict()})
+        else:
+            return JsonResponse({"info": "PLEASE SPECIFY item_type IN REQUEST BODY"})
+
+
+class DecrementUpvote(APIView):
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return JsonResponse({'isAuthenticated': False})
+        body = request.data
+        print(body)
+        if body["item_type"] == "post":
+            post = (Post.objects.filter(id=body["item_id"]))[0]
+            original_post = post.upvote_count
+            post.upvote_count -= 1
+            post.save()
+            return JsonResponse({"updated_object": post.to_dict(),
+                                 "old_object": original_post.to_dict()})
+        elif body["item_type"] == "comment":
+            comment = (Comment.objects.filter(id=body["item_id"]))[0]
+            original_comment = comment.upvote_count
+            comment.upvote_count -= 1
+            comment.save()
+            return JsonResponse({"updated_object": comment.to_dict(),
+                                 "old_object": original_comment.to_dict()})
+        else:
+            return JsonResponse({"info": "PLEASE SPECIFY item_type IN REQUEST BODY"})
 
 
 def get_csrf(request):
