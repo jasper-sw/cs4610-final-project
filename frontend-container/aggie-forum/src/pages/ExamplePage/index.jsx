@@ -11,21 +11,28 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
 import { Fab } from "@mui/material";
+import { TextField } from "@mui/material";
 
 
 function ExamplePage() {
 	var baseURL = process.env.REACT_APP_BASE_URL
 	if (baseURL == undefined) {
 		baseURL = 'localhost:8000'
-		console.log("baseURL env var not set, defaulting to localhost")
-	}
-	else {
-		console.log(`baseURL env var set: [${baseURL}]`)
 	}
 	const [sample,setSample] = useState([]);
 	const [csrfToken, setCsrfToken] = useState(null);
 	const [userStatus, setUserStatus] = useState(true);
+	const [forumTitle, setForumTitle] = useState("");
+	const [forumDescription, setForumDescription] = useState("");
+	const [userSubscriptions, setUserSubscriptions] = useState(null);
   	const navigate = useNavigate();
+	axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+
+	useEffect(() => {
+		whoami()
+		getCsrf();
+	}, []);
 
 	const whoami = async () => {
 		const res = await axios.get(`http://${baseURL}/whoami/`, {withCredentials: true})
@@ -35,23 +42,95 @@ function ExamplePage() {
 		})
 	};
 
-	useEffect(() => {
-		whoami()
-		getCsrf()
-	}, []);
-
 	const getCsrf = async () => {
 		const res = await axios.get(`http://${baseURL}/csrf/`)
 		.then(res => {
 		  console.log(res.data);
 		})
 	  }
+
+	const createSubreddit = async () => {
+		document.getElementById("forumTitle").textContent = "";
+		document.getElementById("forumDescription").textContent = "";
+
+		const res = await axios.post(`http://${baseURL}/create-subreddit/`, {
+			name: forumTitle,
+			description: forumDescription,
+			mod_user_id: userStatus.user_id}, {
+			withCredentials: true,
+			headers: {
+				'content-type': 'application/json',
+				//'X-CSRFToken': `${csrfToken}`,
+				//'Cookie': `csrftoken=${csrfToken}`
+			}
+			})
+		.then(res => {
+			console.log("createSubreddit returned: ")
+			console.log(res.data);
+		})
+
+		const secondRes = await axios.post(`http://${baseURL}/create-subscription/`, {
+			user_id: userStatus.user_id,
+			subreddit_id: 1}, {
+			withCredentials: true,
+			headers: {
+				'content-type': 'application/json',
+				//'X-CSRFToken': `${csrfToken}`,
+				//'Cookie': `csrftoken=${csrfToken}`
+			}
+			})
+		.then(res => {
+			console.log("subscription returned: ")
+			console.log(res.data);
+		});
+
+		navigate('/')
+	}
+
+	const getSubscriptions = async () => {
+		if (userSubscriptions === null) {
+			const res = await axios.post(`http://${baseURL}/get-user-subscriptions/`, {
+			user_id: userStatus.user_id }, {
+			withCredentials: true,
+			headers: {
+				'content-type': 'application/json',
+				//'X-CSRFToken': `${csrfToken}`,
+				//'Cookie': `csrftoken=${csrfToken}`
+			}
+			})
+		.then(res => {
+			console.log("Subscriptions returned for " + userStatus.user_id)
+			console.log(res.data);
+			setUserSubscriptions(res.data.subscriptions);
+		});
+		}
+	}
 	
+	let subscriptions = (
+		<Card style={{ padding: "20px", width: "%" }}>You don't have any subscriptions</Card>
+	);
+
+	if (userSubscriptions !== null) {
+		if (userSubscriptions.length !== 0 ) {
+			subscriptions = (
+				<Grid container spacing={1}>
+					{userSubscriptions.map((subscription) => (
+					<Grid item xs={12} key={subscription.id}>
+						<Card style={{padding: "10px", width: "100%"}}>
+							<h3>Subscription ID: {subscription.id}</h3>
+							<p>Forum Description</p>
+						</Card>
+					</Grid>
+					))}
+				</Grid>
+			);
+		}
+	}
 	
+	getSubscriptions();
 	if (userStatus.isAuthenticated === false) {
 		navigate('/login')
 	} else {
-		console.log("LOGGED IN")
 		return (
 			<div>
 				<Navbar />
@@ -67,34 +146,9 @@ function ExamplePage() {
 								</Grid>
 
 							</Grid>
-							<Grid container spacing={3}>
+							<Grid container spacing={4}>
 								<Grid item xs={8}>
-									<Grid container spacing={1}>
-										<Grid item xs={12}>
-											<ForumCard />
-										</Grid>
-										<Grid item xs={12}>
-											<ForumCard />
-										</Grid>
-										<Grid item xs={12}>
-											<ForumCard />
-										</Grid>
-										<Grid item xs={12}>
-											<ForumCard />
-										</Grid>
-										<Grid item xs={12}>
-											<ForumCard />
-										</Grid>
-										<Grid item xs={12}>
-											<ForumCard />
-										</Grid>
-										<Grid item xs={12}>
-											<ForumCard />
-										</Grid>
-										<Grid item xs={12}>
-											<ForumCard />
-										</Grid>
-									</Grid>
+									{subscriptions}
 								</Grid>
 			
 								<Grid item xs={4}>
@@ -107,6 +161,20 @@ function ExamplePage() {
 												<Divider />
 												<ForumCard />
 												<Divider />
+											</Card>
+										</Grid>
+										<Grid item xs={12}>
+											<Card style={{padding: "10px", margin: "10px"}}>
+												<Grid container spacing={1}>
+													<Grid item xs={12}>
+														<h3>Create New Forum</h3>
+														<TextField id="forumTitle" onChange={(e) => setForumTitle(e.target.value)} variant="filled" label="Forum Name" style={{  width: "100%", marginBottom:"10px"}}></TextField>
+														<TextField id="forumDescription" onChange={(e) => setForumDescription(e.target.value)} variant="filled" label="Description" style={{  width: "100%"}} multiline></TextField>
+													</Grid>
+													<Grid item xs={12} style={{ textAlign: "right" }}>
+														<Button onClick={createSubreddit} variant="contained" style={{ backgroundColor: "green"}}>Create</Button>
+													</Grid>
+												</Grid>
 											</Card>
 										</Grid>
 
