@@ -218,6 +218,30 @@ class GetAllSubreddits(APIView):
         return JsonResponse({"all_subreddits": subreddit_list})
 
 
+class GetInfo(APIView):
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return JsonResponse({'isAuthenticated': False})
+        body = request.data
+        print(body)
+        try:
+            if body["info_type"] == "subreddit":
+                sub = (Subreddit.objects.filter(id=body["item_id"]))[0]
+                return JsonResponse({"info": sub.to_dict()})
+            elif body["info_type"] == "post":
+                post = (Post.objects.filter(id=body["item_id"]))[0]
+                return JsonResponse({"info": post.to_dict()})
+            elif body["info_type"] == "comment":
+                comment = (Comment.objects.filter(id=body["item_id"]))[0]
+                return JsonResponse({"info": comment.to_dict()})
+            else:
+                return JsonResponse({"info": "PLEASE SPECIFY info_type IN REQUEST BODY"})
+        except IndexError:
+            return JsonResponse({"info": "NO ITEM WITH ID: [{}] OF TYPE: [{}]".format(body["item_id"],
+                                                                                      body["info_type"])})
+
+
 def get_csrf(request):
     response = JsonResponse({'detail': 'CSRF cookie set'})
     response['X-CSRFToken'] = get_token(request)
