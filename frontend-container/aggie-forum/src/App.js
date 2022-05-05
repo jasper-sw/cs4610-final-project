@@ -6,7 +6,7 @@ import Navbar from './components/Navbar/navbar';
 import ForumCard from './components/ForumCard/ForumCard'
 import { Divider } from '@mui/material';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 
 
@@ -14,6 +14,7 @@ function App() {
 	// these two lines need to be in every function based react component where we use axios
 	axios.defaults.xsrfCookieName = 'csrftoken'
     axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+	const [allSubreddits, setAllSubreddits] = useState([]);
 	
 	var baseURL = process.env.REACT_APP_BASE_URL
 	if (baseURL === undefined) {
@@ -26,7 +27,7 @@ function App() {
 
 	useEffect(() => {
 		getCsrf();
-		createSubreddit();
+		getSubreddits();
 	}, []);
 
 	const getCsrf = async () => {
@@ -43,10 +44,8 @@ function App() {
 		})
 	}
 
-	const createSubreddit = async () => {
-		const res = await axios.post(`http://${baseURL}/create-subreddit/`, {
-		  name: "test subreddit",
-		  description: "test description",
+	const getSubreddits = async () => {
+		const res = await axios.post(`http://${baseURL}/get-all-subreddits/`, {
 		  mod_user_id: 1}, {
 			withCredentials: true,
 			headers: {
@@ -56,10 +55,14 @@ function App() {
 			}
 		  })
 		.then(res => {
-		  console.log("createSubreddit returned: ")
+		  console.log("getSubreddits returned: ")
 		  console.log(res.data);
+		  setAllSubreddits(res.data.all_subreddits);
+		  console.log("setAllSubreddits to: ");
+		  console.log(res.data.all_subreddits);
 		})
-	  }
+	}
+
 
   return (
 	<div>
@@ -73,20 +76,21 @@ function App() {
 				</Grid>
 				<h4>Recent Forums</h4>
 				<div style={{display: "flex", flexDirection: "column", backgroundColor: "white", borderRadius: "10px", minWidth: "70%"}}>
-					<ForumCard />
-					<Divider />
-					<ForumCard />
-					<Divider />
-					<ForumCard />
-					<Divider />
-					<ForumCard />
-					<Divider />
-					<ForumCard />
-					<Divider />
-					<ForumCard />
-					<Divider />
-					<ForumCard />
-					<Divider />
+				{allSubreddits.length > 0 && (
+					allSubreddits.map((item, index) => {
+						console.log(item.name)
+						return(
+							<div>
+								<ForumCard 
+								key={index}  
+								title={item.name} 
+								description={item.description} />
+								<Divider />
+							</div>
+						);
+					})
+					)
+				}
 				</div>
 			</div>
 		</div>
