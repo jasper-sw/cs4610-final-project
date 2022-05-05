@@ -16,7 +16,8 @@ from aggieForumApp.views import (get_csrf,
                                  DeleteAccount,
                                  GetUserSubscriptions,
                                  GetUserPosts,
-                                 GetUserComments)
+                                 GetUserComments,
+                                 GetAllSubreddits)
 
 urlpatterns = [
     path('csrf/', get_csrf, name='csrf'),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('delete-comment/', DeleteComment.as_view(), name='delete-comment'),
     path('get-user-subscriptions/', GetUserSubscriptions.as_view(), name='get-user-subscriptions'),
     path('get-user-posts/', GetUserPosts.as_view(), name='get-user-posts'),
-    path('get-user-comments/', GetUserComments.as_view(), name='get-user-comments')
+    path('get-user-comments/', GetUserComments.as_view(), name='get-user-comments'),
+    path('get-all-subreddits/', GetAllSubreddits.as_view(), name='get-all-subreddits')
 ]
 

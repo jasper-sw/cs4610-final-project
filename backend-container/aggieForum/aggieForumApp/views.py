@@ -173,7 +173,7 @@ class GetUserSubscriptions(APIView):
         subs_list = []
         for sub in subs:
             subs_list.append(sub.to_dict())
-        return JsonResponse({"Subscriptions for user: [{}]".format(request.user.id): subs_list})
+        return JsonResponse({"subscriptions": subs_list, "user_id": request.user.id})
 
 
 class GetUserPosts(APIView):
@@ -187,7 +187,7 @@ class GetUserPosts(APIView):
         posts_list = []
         for post in posts:
             posts_list.append(post.to_dict())
-        return JsonResponse({"Posts for user: [{}]".format(request.user.id): posts_list})
+        return JsonResponse({"posts": posts_list, "user_id": request.user.id})
 
 
 class GetUserComments(APIView):
@@ -201,7 +201,21 @@ class GetUserComments(APIView):
         comments_list = []
         for comment in comments:
             comments_list.append(comment.to_dict())
-        return JsonResponse({"Comments for user: [{}]".format(request.user.id): comments_list})
+        return JsonResponse({"comments": comments_list, "user_id": request.user.id})
+
+
+class GetAllSubreddits(APIView):
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return JsonResponse({'isAuthenticated': False})
+        body = request.data
+        print(body)
+        subreddits = Subreddit.objects.all()
+        subreddit_list = []
+        for sub in subreddits:
+            subreddit_list.append(sub.to_dict())
+        return JsonResponse({"all_subreddits": subreddit_list})
 
 
 def get_csrf(request):
@@ -252,4 +266,7 @@ def whoami_view(request):
         return JsonResponse({'isAuthenticated': False})
 
     return JsonResponse({'username': request.user.username,
-                         'user_id': request.user.id})
+                         'user_id': request.user.id,
+                         'first_name': request.user.first_name,
+                         'last_name': request.user.last_name,
+                         'email': request.user.email})

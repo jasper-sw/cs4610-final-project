@@ -11,6 +11,12 @@ class Subreddit(models.Model):
     mod_user_id = models.IntegerField(null=True, blank=False)
     objects = models.Manager()
 
+    def get_all(self):
+        #queryset = self._meta.model.objects.all()
+        # can use the below method also
+        queryset = self.__class__.objects.all()
+        return queryset
+
     def __str__(self):
         return '[Subreddit] Subreddit_id: [{}], ' \
                'Name: [{}], ' \
