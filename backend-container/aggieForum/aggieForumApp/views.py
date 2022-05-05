@@ -61,7 +61,7 @@ class CreateSubreddit(APIView):
         created_subreddit = (Subreddit.objects.filter(name=body["name"],
                                                       description=body["description"],
                                                       mod_user_id=body["mod_user_id"]))[0]
-        return JsonResponse({"created_subreddit: ": str(created_subreddit)})
+        return JsonResponse({"created_subreddit: ": created_subreddit.to_dict()})
 
 
 class DeleteSubreddit(APIView):
@@ -92,7 +92,7 @@ class CreatePost(APIView):
                                             body=new_post.body,
                                             posted_by_user_id=new_post.posted_by_user_id,
                                             subreddit_id=new_post.subreddit_id))[0]
-        return JsonResponse({"created_post: ": str(created_post)})
+        return JsonResponse({"created_post: ": created_post.to_dict()})
 
 
 class DeletePost(APIView):
@@ -119,7 +119,7 @@ class CreateSubscription(APIView):
         new_sub.save()
         created_sub = (Subscription.objects.filter(user_id=new_sub.user_id,
                                                    subreddit_id=new_sub.subreddit_id))[0]
-        return JsonResponse({"created_subscription: ": str(created_sub)})
+        return JsonResponse({"created_subscription: ": created_sub.to_dict()})
 
 
 class DeleteSubscription(APIView):
@@ -148,7 +148,7 @@ class CreateComment(APIView):
         created_comment = (Comment.objects.filter(body=body["body"],
                                                   posted_by_user_id=body["posted_by_user_id"],
                                                   post_id=body["post_id"]))[0]
-        return JsonResponse({"created_post: ": str(created_comment)})
+        return JsonResponse({"created_post: ": created_comment.to_dict()})
 
 
 class DeleteComment(APIView):
