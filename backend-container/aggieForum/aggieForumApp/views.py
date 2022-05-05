@@ -174,7 +174,7 @@ class GetUserSubscriptions(APIView):
         errors_list = []
         for sub in subs:
             try:
-                subs_list.append((Subreddit.objects.filter(id=sub.id))[0].to_dict())
+                subs_list.append((Subreddit.objects.filter(id=sub.subreddit_id))[0].to_dict())
             except IndexError:
                 errors_list.append("Couldn't add subreddit with id: {}".format(sub.id))
         return JsonResponse({"subscriptions": subs_list, "errors": errors_list, "user_id": request.user.id})
