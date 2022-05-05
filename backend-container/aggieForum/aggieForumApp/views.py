@@ -31,7 +31,7 @@ class CreateAccount(APIView):
                                        is_staff=True)
         new_user.set_password(body["password"])
         new_user.save()
-        return JsonResponse({"Created user: ": str(new_user)})
+        return JsonResponse({"created_user: ": str(new_user)})
 
 
 class DeleteAccount(APIView):
@@ -43,7 +43,7 @@ class DeleteAccount(APIView):
         print(body)
         target_user = (User.objects.filter(id=body["id"]))[0]
         target_user.delete()
-        return JsonResponse({"delete result": "Success"})
+        return JsonResponse({"delete_result": "Success"})
 
 
 class CreateSubreddit(APIView):
@@ -60,7 +60,7 @@ class CreateSubreddit(APIView):
         created_subreddit = (Subreddit.objects.filter(name=body["name"],
                                                       description=body["description"],
                                                       mod_user_id=body["mod_user_id"]))[0]
-        return JsonResponse({"Created subreddit: ": str(created_subreddit)})
+        return JsonResponse({"created_subreddit: ": str(created_subreddit)})
 
 
 class DeleteSubreddit(APIView):
@@ -72,7 +72,7 @@ class DeleteSubreddit(APIView):
         print(body)
         target_subreddit = (Subreddit.objects.filter(id=body["id"]))[0]
         target_subreddit.delete()
-        return JsonResponse({"delete result": "Success"})
+        return JsonResponse({"delete_result": "Success"})
 
 
 class CreatePost(APIView):
@@ -91,7 +91,7 @@ class CreatePost(APIView):
                                             body=new_post.body,
                                             posted_by_user_id=new_post.posted_by_user_id,
                                             subreddit_id=new_post.subreddit_id))[0]
-        return JsonResponse({"Created post: ": str(created_post)})
+        return JsonResponse({"created_post: ": str(created_post)})
 
 
 class DeletePost(APIView):
@@ -103,7 +103,7 @@ class DeletePost(APIView):
         print(body)
         target_post = (Post.objects.filter(id=body["id"]))[0]
         target_post.delete()
-        return JsonResponse({"delete result": "Success"})
+        return JsonResponse({"delete_result": "Success"})
 
 
 class CreateSubscription(APIView):
@@ -118,7 +118,7 @@ class CreateSubscription(APIView):
         new_sub.save()
         created_sub = (Subscription.objects.filter(user_id=new_sub.user_id,
                                                    subreddit_id=new_sub.subreddit_id))[0]
-        return JsonResponse({"Created post: ": str(created_sub)})
+        return JsonResponse({"created_subscription: ": str(created_sub)})
 
 
 class DeleteSubscription(APIView):
@@ -130,7 +130,7 @@ class DeleteSubscription(APIView):
         print(body)
         target_sub = (Subscription.objects.filter(id=body["id"]))[0]
         target_sub.delete()
-        return JsonResponse({"delete result": "Success"})
+        return JsonResponse({"delete_result": "Success"})
 
 
 class CreateComment(APIView):
@@ -147,7 +147,7 @@ class CreateComment(APIView):
         created_comment = (Comment.objects.filter(body=body["body"],
                                                   posted_by_user_id=body["posted_by_user_id"],
                                                   post_id=body["post_id"]))[0]
-        return JsonResponse({"Created post: ": str(created_comment)})
+        return JsonResponse({"created_post: ": str(created_comment)})
 
 
 class DeleteComment(APIView):
@@ -159,7 +159,7 @@ class DeleteComment(APIView):
         print(body)
         target_comment = (Comment.objects.filter(id=body["id"]))[0]
         target_comment.delete()
-        return JsonResponse({"delete result": "Success"})
+        return JsonResponse({"delete_result": "Success"})
 
 
 class GetUserSubscriptions(APIView):
@@ -172,7 +172,7 @@ class GetUserSubscriptions(APIView):
         subs = Subscription.objects.filter(user_id=body["user_id"])
         subs_list = []
         for sub in subs:
-            subs_list.append(sub.to_dict())
+            subs_list.append((Subreddit.objects.filter(id=sub.id))[0].to_dict())
         return JsonResponse({"subscriptions": subs_list, "user_id": request.user.id})
 
 
