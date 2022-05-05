@@ -20,7 +20,8 @@ from aggieForumApp.views import (get_csrf,
                                  GetAllSubreddits,
                                  GetInfo,
                                  IncrementUpvote,
-                                 DecrementUpvote)
+                                 DecrementUpvote,
+                                 Search)
 
 urlpatterns = [
     path('csrf/', get_csrf, name='csrf'),
@@ -44,6 +45,7 @@ urlpatterns = [
     path('get-all-subreddits/', GetAllSubreddits.as_view(), name='get-all-subreddits'),
     path('get-info/', GetInfo.as_view(), name='get-info'),
     path('increment-upvote/', IncrementUpvote.as_view(), name='increment-upvote'),
-    path('decrement-upvote/', DecrementUpvote.as_view(), name='decrement-upvote')
+    path('decrement-upvote/', DecrementUpvote.as_view(), name='decrement-upvote'),
+    path('search/', Search.as_view(), name='search')
 ]
 

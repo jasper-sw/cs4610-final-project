@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from .models import Subreddit, Subscription, Comment, Post
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 # get base url .env var
 try:
@@ -294,6 +295,26 @@ class DecrementUpvote(APIView):
                                  "old_object": original_comment.to_dict()})
         else:
             return JsonResponse({"info": "PLEASE SPECIFY item_type IN REQUEST BODY"})
+
+
+class Search(APIView):
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return JsonResponse({'isAuthenticated': False})
+        body = request.data
+        print(body)
+        query_string = body["query_string"]
+        query_results = []
+        posts = Post.objects.all()
+        posts.filter(Q(body__icontains=query_string) | Q(title__icontains=query_string))
+        for post in posts:
+            query_results.append(post.to_dict())
+        subreddits = Subreddit.objects.all()
+        subreddits.filter(Q(name__icontains=query_string) | Q(description__icontains=query_string))
+        for sub in subreddits:
+            query_results.append(sub.to_dict())
+        return JsonResponse({"results": query_results})
 
 
 def get_csrf(request):
