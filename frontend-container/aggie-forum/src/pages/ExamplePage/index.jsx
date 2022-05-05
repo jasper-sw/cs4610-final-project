@@ -38,7 +38,7 @@ function ExamplePage() {
 		const res = await axios.get(`http://${baseURL}/whoami/`, {withCredentials: true})
 		.then(res => {
 			console.log(res.data);
-			setUserStatus(res.data)
+			setUserStatus(res.data);
 		})
 	};
 
@@ -89,7 +89,7 @@ function ExamplePage() {
 	}
 
 	const getSubscriptions = async () => {
-		if (userSubscriptions === null) {
+		if (userSubscriptions == null) {
 			const res = await axios.post(`http://${baseURL}/get-user-subscriptions/`, {
 			user_id: userStatus.user_id }, {
 			withCredentials: true,
