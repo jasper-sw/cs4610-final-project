@@ -84,7 +84,7 @@ function ExamplePage() {
 			console.log(res.data);
 		});
 
-		navigate('/')
+		navigate('/', {})
 	}
 
 	const getSubscriptions = async () => {
@@ -114,9 +114,9 @@ function ExamplePage() {
 		if (userSubscriptions.length !== 0 ) {
 			subscriptions = (
 				<Grid container spacing={1}>
-					{userSubscriptions.map((subscription) => (
-					<Grid item xs={12} key={subscription.id}>
-						<Card style={{padding: "10px", width: "100%"}}>
+					{userSubscriptions.map((subscription, index) => (
+					<Grid item xs={12} key={index}>
+						<Card key={index} style={{padding: "10px", width: "100%"}}>
 							<h3>Subscription ID: {subscription.id}</h3>
 							<p>Forum Description</p>
 						</Card>
