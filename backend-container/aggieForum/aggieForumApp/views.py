@@ -57,7 +57,6 @@ class CreateSubreddit(APIView):
         new_subreddit = Subreddit.objects.create(name=body["name"],
                                                  description=body["description"],
                                                  mod_user_id=body["mod_user_id"])
-        new_subreddit.save()
         created_subreddit = (Subreddit.objects.filter(name=body["name"],
                                                       description=body["description"],
                                                       mod_user_id=body["mod_user_id"]))[0]
@@ -87,7 +86,6 @@ class CreatePost(APIView):
                                        body=body["body"],
                                        posted_by_user_id=body["posted_by_user_id"],
                                        subreddit_id=body["subreddit_id"])
-        new_post.save()
         created_post = (Post.objects.filter(title=new_post.title,
                                             body=new_post.body,
                                             posted_by_user_id=new_post.posted_by_user_id,
