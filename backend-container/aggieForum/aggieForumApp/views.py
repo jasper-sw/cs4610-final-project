@@ -57,6 +57,7 @@ class CreateSubreddit(APIView):
         new_subreddit = Subreddit.objects.create(name=body["name"],
                                                  description=body["description"],
                                                  mod_user_id=body["mod_user_id"])
+        new_subreddit.save()
         created_subreddit = (Subreddit.objects.filter(name=body["name"],
                                                       description=body["description"],
                                                       mod_user_id=body["mod_user_id"]))[0]
@@ -86,6 +87,7 @@ class CreatePost(APIView):
                                        body=body["body"],
                                        posted_by_user_id=body["posted_by_user_id"],
                                        subreddit_id=body["subreddit_id"])
+        new_post.save()
         created_post = (Post.objects.filter(title=new_post.title,
                                             body=new_post.body,
                                             posted_by_user_id=new_post.posted_by_user_id,
@@ -114,6 +116,7 @@ class CreateSubscription(APIView):
         print(body)
         new_sub = Subscription.objects.create(user_id=body["user_id"],
                                               subreddit_id=body["subreddit_id"])
+        new_sub.save()
         created_sub = (Subscription.objects.filter(user_id=new_sub.user_id,
                                                    subreddit_id=new_sub.subreddit_id))[0]
         return JsonResponse({"created_subscription: ": created_sub.to_dict()})
@@ -141,6 +144,7 @@ class CreateComment(APIView):
         new_comment = Comment.objects.create(body=body["body"],
                                              posted_by_user_id=body["posted_by_user_id"],
                                              post_id=body["post_id"])
+        new_comment.save()
         created_comment = (Comment.objects.filter(body=body["body"],
                                                   posted_by_user_id=body["posted_by_user_id"],
                                                   post_id=body["post_id"]))[0]
@@ -208,8 +212,8 @@ class GetUserComments(APIView):
 class GetAllSubreddits(APIView):
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'isAuthenticated': False})
+        # if not request.user.is_authenticated:
+        #     return JsonResponse({'isAuthenticated': False})
         body = request.data
         print(body)
         subreddits = Subreddit.objects.all()
