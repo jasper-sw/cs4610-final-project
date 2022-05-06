@@ -38,7 +38,7 @@ function ExamplePage() {
 		const res = await axios.get(`http://${baseURL}/whoami/`, {withCredentials: true})
 		.then(res => {
 			console.log(res.data);
-			setUserStatus(res.data)
+			setUserStatus(res.data);
 		})
 	};
 
@@ -52,6 +52,7 @@ function ExamplePage() {
 	const createSubreddit = async () => {
 		document.getElementById("forumTitle").textContent = "";
 		document.getElementById("forumDescription").textContent = "";
+		let test = 0
 
 		const res = await axios.post(`http://${baseURL}/create-subreddit/`, {
 			name: forumTitle,
@@ -67,11 +68,12 @@ function ExamplePage() {
 		.then(res => {
 			console.log("createSubreddit returned: ")
 			console.log(res.data);
+			test = res.data["created_subreddit: "].id
 		})
 
 		const secondRes = await axios.post(`http://${baseURL}/create-subscription/`, {
 			user_id: userStatus.user_id,
-			subreddit_id: 1}, {
+			subreddit_id: test}, {
 			withCredentials: true,
 			headers: {
 				'content-type': 'application/json',
@@ -82,13 +84,12 @@ function ExamplePage() {
 		.then(res => {
 			console.log("subscription returned: ")
 			console.log(res.data);
+			setUserSubscriptions(null)
 		});
-
-		navigate('/', {})
 	}
 
 	const getSubscriptions = async () => {
-		if (userSubscriptions === null) {
+		if (userSubscriptions == null) {
 			const res = await axios.post(`http://${baseURL}/get-user-subscriptions/`, {
 			user_id: userStatus.user_id }, {
 			withCredentials: true,
@@ -116,9 +117,9 @@ function ExamplePage() {
 				<Grid container spacing={1}>
 					{userSubscriptions.map((subscription, index) => (
 					<Grid item xs={12} key={index}>
-						<Card key={index} style={{padding: "10px", width: "100%"}}>
-							<h3>Subscription ID: {subscription.id}</h3>
-							<p>Forum Description</p>
+						<Card style={{padding: "10px", width: "100%"}}>
+							<h3>{subscription.name}</h3>
+							<p>{subscription.description}</p>
 						</Card>
 					</Grid>
 					))}
@@ -141,10 +142,6 @@ function ExamplePage() {
 								<Grid item xs={8}>
 									<h4>My Subscriptions</h4>
 								</Grid>
-								<Grid item xs={4}>
-									<h4>My Forums</h4>
-								</Grid>
-
 							</Grid>
 							<Grid container spacing={4}>
 								<Grid item xs={8}>
@@ -153,16 +150,6 @@ function ExamplePage() {
 			
 								<Grid item xs={4}>
 									<Grid container spacing={2}>
-										<Grid item xs={12}>
-											<Card style={{padding: "10px"}}>
-												<ForumCard />
-												<Divider />
-												<ForumCard />
-												<Divider />
-												<ForumCard />
-												<Divider />
-											</Card>
-										</Grid>
 										<Grid item xs={12}>
 											<Card style={{padding: "10px", margin: "10px"}}>
 												<Grid container spacing={1}>
