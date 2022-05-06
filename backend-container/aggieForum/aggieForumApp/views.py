@@ -212,8 +212,6 @@ class GetUserComments(APIView):
 class GetAllSubreddits(APIView):
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return JsonResponse({'isAuthenticated': False})
         body = request.data
         print(body)
         subreddits = Subreddit.objects.all()
