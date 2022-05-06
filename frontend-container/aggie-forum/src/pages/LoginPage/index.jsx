@@ -81,7 +81,7 @@ function LoginPage() {
         <Typography variant="h4" style={{textDecoration: "none", marginTop: "10px", marginBottom: "20px"}}>Log In</Typography>
         <form onSubmit={onSubmit}>
           <TextField onChange={(e) => setUsername(e.target.value)} id="filled-basic" label="Username" variant="filled" style={{ display: "flex", marginBottom: "20px", }}/>
-          <TextField onChange={(e) => setPassword(e.target.value)} id="filled-basic" label="Password" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
+          <TextField onChange={(e) => setPassword(e.target.value)} type="password" id="filled-basic" label="Password" variant="filled" style={{ display: "flex", marginBottom: "20px" }}/>
           <div style={{justifyContent: "center"}}>
             <Fab value="Submit" type="submit"  variant="extended" size="medium" color="primary" aria-label="add" style={{ width: "100%", backgroundColor: "#3769a5"}}>Log in</Fab>
           </div>
