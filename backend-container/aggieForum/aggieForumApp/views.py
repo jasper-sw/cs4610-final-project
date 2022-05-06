@@ -114,7 +114,6 @@ class CreateSubscription(APIView):
         print(body)
         new_sub = Subscription.objects.create(user_id=body["user_id"],
                                               subreddit_id=body["subreddit_id"])
-        new_sub.save()
         created_sub = (Subscription.objects.filter(user_id=new_sub.user_id,
                                                    subreddit_id=new_sub.subreddit_id))[0]
         return JsonResponse({"created_subscription: ": created_sub.to_dict()})
